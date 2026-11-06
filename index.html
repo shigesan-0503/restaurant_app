@@ -147,7 +147,7 @@
            headers: { 'Content-Type': 'application/json' },
         });
         const data = await response.json();
-        console.log("data:" + data.text());
+        console.log("data:" + data.apiKey);
         if (response.ok) {
           apiKey = data.apiKey;
           localStorage.setItem('gemini_api_key', apiKey);
