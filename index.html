@@ -155,7 +155,7 @@
           console.log('サーバーからのAPIキー取得に失敗しました。');
         }
       } catch (error) {
-        console.log('APIキーの自動取得スキップ（または通信エラー）');
+        console.log('APIキーの自動取得スキップ（または通信エラー）:' + error);
       }
     }
   });
