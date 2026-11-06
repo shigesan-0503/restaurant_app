@@ -122,12 +122,6 @@
 
 <div class="chat-container">
   <div class="chat-header">AI アシスタント</div>
-  <!--
-  <div class="api-key-box">
-    <input type="password" id="apiKey" placeholder="Gemini APIキーを入力してください">
-  </div>
-  -->
-
   <!-- チャットメッセージ表示エリア -->
   <div class="chat-messages" id="chatMessages">
     <div class="message bot">
@@ -146,6 +140,7 @@
   // 画面読み込み時にローカルストレージからAPIキーを復元（必要に応じて）
   window.addEventListener('DOMContentLoaded', () => {
     const apiKey = localStorage.getItem('gemini_api_key');
+    console.log("APIKEY:" + apiKey);
     if (!apiKey) {
       const response = await fetch("api/gemini");
       const data = await response.json();
