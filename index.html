@@ -122,7 +122,6 @@
 
 <div class="chat-container">
   <div class="chat-header">AI アシスタント</div>
-  
   <!--
   <div class="api-key-box">
     <input type="password" id="apiKey" placeholder="Gemini APIキーを入力してください">
@@ -144,32 +143,29 @@
 </div>
 
 <script>
-  const apiKey = localStorage.getItem('gemini_api_key');
-  if (!apiKey) {
-    const response = await fetch("api/gemini");
-    const data = await response.json();
-    if( response.ok ) {
-        apiKey = data.apiKey;
-        localStorage.setItem('gemini_api_key', apiKey);
-
+  // 画面読み込み時にローカルストレージからAPIキーを復元（必要に応じて）
+  window.addEventListener('DOMContentLoaded', () => {
+    const apiKey = localStorage.getItem('gemini_api_key');
+    if (!apiKey) {
+      const response = await fetch("api/gemini");
+      const data = await response.json();
+      if( response.ok ) {
+          apiKey = data.apiKey;
+          localStorage.setItem('gemini_api_key', apiKey);
     } else {
         alert('エラーが発生しました。APIキーが正しいか、または通信状態を確認してみてね！😥\nエラー内容: ' + error.message); 
     }
-  }
-
+  });
+</script>
+<script>
   async function sendMessage() {
     const apiKeyInput = document.getElementById('apiKey');
     const userInput = document.getElementById('userInput');
     const chatMessages = document.getElementById('chatMessages');
     const sendBtn = document.getElementById('sendBtn');
-
-    const apiKey = apiKeyInput.value.trim();
     const text = userInput.value.trim();
+    const apiKey = localStorage.getItem('gemini_api_key');
 
-    //if (!apiKey) {
-    //  alert('Gemini APIキーを入力してください。');
-    //  return;
-    //}
     if (!text) return;
 
     // 1. ユーザーのメッセージを画面に追加
