@@ -137,18 +137,24 @@
 </div>
 
 <script>
-  // 画面読み込み時にローカルストレージからAPIキーを復元（必要に応じて）
-  window.addEventListener('DOMContentLoaded', () => {
-    const apiKey = localStorage.getItem('gemini_api_key');
+// 画面読み込み時にローカルストレージからAPIキーを取得、なければサーバー等から取得を試みる
+  window.addEventListener('DOMContentLoaded', async () => {
+    let apiKey = localStorage.getItem('gemini_api_key');
     console.log("APIKEY:" + apiKey);
+    
     if (!apiKey) {
-      const response = await fetch("api/gemini");
-      const data = await response.json();
-      if( response.ok ) {
+      try {
+        const response = await fetch("api/gemini");
+        const data = await response.json();
+        if (response.ok) {
           apiKey = data.apiKey;
           localStorage.setItem('gemini_api_key', apiKey);
-    } else {
-        alert('エラーが発生しました。APIキーが正しいか、または通信状態を確認してみてね！😥\nエラー内容: ' + error.message); 
+        } else {
+          console.log('サーバーからのAPIキー取得に失敗しました。');
+        }
+      } catch (error) {
+        console.log('APIキーの自動取得スキップ（または通信エラー）');
+      }
     }
   });
 </script>
